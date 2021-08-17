@@ -27,17 +27,14 @@ pipeline {
     // }
 
     stages {
-        
-        def image
-
         stage('Build') {
             steps {
-                image = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
+                def app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
             }
         }
         stage('Test') {
             steps {
-                image.inside {
+                app.inside {
                     dir('/app') {                    
                         sh 'python3 -m unittest discover -vvv'
                     }   
