@@ -26,9 +26,10 @@ pipeline {
     //     }
     // }
 
-    def image
-
     stages {
+        
+        def image
+
         stage('Build') {
             steps {
                 image = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
