@@ -7,22 +7,25 @@
         def app        
         def dockerfile = 'Dockerfile.app'
 
-        stage('Build image') {    
-            app = docker.build("werrio5/flask-helloworld", "-f ${dockerfile} .") 
-        } 
+        try{
+            stage('Build') {    
+                app = docker.build("werrio5/flask-helloworld", "-f ${dockerfile} .") 
+            } 
 
-        stage('Test') {
-            app.inside {
-                sh 'python3 -m unittest discover /app -vvv' 
+            stage('Tests') {
+                app.inside {
+                    sh 'python3 -m unittest discover /app -vvv' 
+                }
             }
         }
-        post {
-            always {            
+        finally{
+            stage('Cleanup') {
                 sh 'docker stop $(docker ps -a -q)'
                 sh 'docker rm $(docker ps -a -q)'
-                
-                echo 'docker data erased'      
-            }
+                sh 'docker rmi $(docker images -q)'
+
+                echo 'docker data erased'
+            }                
         }
     }
 
