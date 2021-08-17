@@ -34,13 +34,13 @@
                     transfers: [
                         sshTransfer(
                             cleanRemote: false, 
-                            execCommand: 'docker load --input app.tar ; docker images', 
+                            execCommand: 'docker load --input /tmp/app.tar ; docker images', 
                             execTimeout: 120000, 
                             flatten: false, 
                             makeEmptyDirs: false, 
                             noDefaultExcludes: false, 
                             patternSeparator: '[, ]+', 
-                            remoteDirectory: '/deploy', 
+                            remoteDirectory: '/tmp', 
                             remoteDirectorySDF: false, 
                             sourceFiles: 'app.tar'
                         )
