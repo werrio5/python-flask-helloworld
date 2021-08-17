@@ -18,31 +18,46 @@ pipeline {
         STACK_PREFIX = "my-project-stack-name"
     }
 
-    // agent any
-    agent {
-        docker {
-            args '-v /app:/app -p 8080:80'
-            image 'jazzdd/alpine-flask'
-        }
-    }
+    agent any
+    // agent {
+    //     docker {
+    //         args '-v /app:/app -p 8080:80'
+    //         image 'jazzdd/alpine-flask'
+    //     }
+    // }
+
+    def image
 
     stages {
-        // stage('Build') {
-        //     steps {
-        //         sh "docker-compose up --build"
-        //     }
-        // }
+        stage('Build') {
+            steps {
+                image = docker.build(
+                    "jazzdd/alpine-flask",
+                     "-v /app:/app 
+                     -p 80:80"
+                )
+            }
+        }
         stage('Test') {
             steps {
-                dir('/app') {                    
-                    sh 'python3 -m unittest discover -vvv'
-                }               
+                image.inside {
+                    dir('/app') {                    
+                        sh 'python3 -m unittest discover -vvv'
+                    }   
+                }            
             }
         }
         stage('Deploy') {
             steps {
                 echo '(not) Deploying....'
             }
+        }
+    }
+    post {
+        always {            
+            sh 'docker stop $(docker ps -a -q)'
+            sh 'docker rm $(docker ps -a -q)'
+            sh 'docker rmi $(docker ps -a -q)'            
         }
     }
 }
