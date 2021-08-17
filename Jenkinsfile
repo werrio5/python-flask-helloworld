@@ -29,7 +29,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                def app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
+                docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
             }
         }
         stage('Test') {
