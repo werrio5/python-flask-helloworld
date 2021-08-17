@@ -23,7 +23,32 @@
             }
 
             stage('Deploy') {
-                //sshPublisher(publishers: [sshPublisherDesc(configName: 'test1.dev.net', sshCredentials: [encryptedPassphrase: '{AQAAABAAAAAQM8quiYo5M2F0sd/Bv40cZwBM342NWwklcWPJCt6x780=}', key: '', keyPath: '', username: 'ssh'], transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'some command idk', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/deploy', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'builtimage')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'test1.dev.net', 
+                            sshCredentials: [
+                                encryptedPassphrase: '{AQAAABAAAAAQM8quiYo5M2F0sd/Bv40cZwBM342NWwklcWPJCt6x780=}',
+                                 username: 'ssh'
+                                 ], 
+                    transfers: [
+                        sshTransfer(
+                            cleanRemote: false, 
+                            execCommand: 'docker load --input app.tar ; docker images', 
+                            execTimeout: 120000, 
+                            flatten: false, 
+                            makeEmptyDirs: false, 
+                            noDefaultExcludes: false, 
+                            patternSeparator: '[, ]+', 
+                            remoteDirectory: '/deploy', 
+                            remoteDirectorySDF: false, 
+                            sourceFiles: 'app.tar'
+                        )
+                    ], 
+                    usePromotionTimestamp: false, 
+                    useWorkspaceInPromotion: false, 
+                    verbose: false
+                )])
             }
         }
         finally{              
