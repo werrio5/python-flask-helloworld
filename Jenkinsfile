@@ -47,7 +47,7 @@
                     ], 
                     usePromotionTimestamp: false, 
                     useWorkspaceInPromotion: false, 
-                    verbose: false
+                    verbose: true
                 )])
             }
         }
