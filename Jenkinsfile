@@ -5,8 +5,9 @@
     node{
         checkout scm
         def app        
+        def dockerfile = 'Dockerfile.app'
         stage('Build image') {    
-            app = docker.build("jazzdd/alpine-flask") 
+            app = docker.build("werrio5/flask-helloworld", "-f ${dockerfile} -p 80 .") 
         } 
     }
 
