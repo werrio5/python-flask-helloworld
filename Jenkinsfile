@@ -1,8 +1,9 @@
-pipeline {
+//pipeline {
     //https://gist.github.com/bvis/68f3ab6946134f7379c80f1a9132057a
     //https://www.jenkins.io/doc/book/pipeline/syntax/
 
     node{
+        checkout scm
         def app        
         stage('Build image') {    
             app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80") 
@@ -43,7 +44,7 @@ pipeline {
     //         sh 'docker rmi $(docker ps -a -q)'            
     //     }
     // }
-}
+//}
 
 // node {    
 //       def app     
