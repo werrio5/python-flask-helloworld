@@ -6,7 +6,7 @@
         checkout scm
         def app        
         stage('Build image') {    
-            app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80") 
+            app = docker.build("jazzdd/alpine-flask") 
         } 
     }
 
