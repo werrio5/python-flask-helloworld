@@ -2,33 +2,40 @@ pipeline {
     //https://gist.github.com/bvis/68f3ab6946134f7379c80f1a9132057a
     //https://www.jenkins.io/doc/book/pipeline/syntax/
 
-    //agent any
-    agent {
-        docker {
-            args '-v /var/jenkins_home/workspace/python-flask-helloworld-test/app:/app -p 8080:80'
-            image 'jazzdd/alpine-flask'
-        }
+    node{
+        def app        
+        stage('Build image') {    
+            app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80") 
+        } 
     }
 
-    stages {
-        // stage('Build') {
-        //     steps {
-        //         script {
-        //             def app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
-        //         }                
-        //     }
-        // }
-        stage('Test') {
-            steps {
-                sh 'python3 -m unittest discover -vvv'                         
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo '(not) Deploying....'
-            }
-        }
-    }
+    // //agent any
+    // agent {
+    //     docker {
+    //         args '-v /var/jenkins_home/workspace/python-flask-helloworld-test/app:/app -p 8080:80'
+    //         image 'jazzdd/alpine-flask'
+    //     }
+    // }
+
+    // stages {
+    //     // stage('Build') {
+    //     //     steps {
+    //     //         script {
+    //     //             def app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
+    //     //         }                
+    //     //     }
+    //     // }
+    //     stage('Test') {
+    //         steps {
+    //             sh 'python3 -m unittest discover -vvv'                         
+    //         }
+    //     }
+    //     stage('Deploy') {
+    //         steps {
+    //             echo '(not) Deploying....'
+    //         }
+    //     }
+    // }
     // post {
     //     always {            
     //         sh 'docker stop $(docker ps -a -q)'
