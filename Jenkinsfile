@@ -23,7 +23,6 @@ pipeline {
         docker {
             args '-v ./:/app -p 80:80'
             image 'jazzdd/alpine-flask'
-            label 'flask-helloworld'
         }
     }
 
