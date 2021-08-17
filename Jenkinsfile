@@ -19,11 +19,11 @@ pipeline {
     }
 
     // agent any
-    agent { 
-        dockerfile {
+    agent {
+        docker {
+            args '-v ./:/app -p 80:80'
             image 'jazzdd/alpine-flask'
             label 'flask-helloworld'
-            args '-v ./:/app -p 80:80'
         }
     }
 
