@@ -7,7 +7,7 @@
         def app        
         def dockerfile = 'Dockerfile.app'
         stage('Build image') {    
-            app = docker.build("werrio5/flask-helloworld", "-f ${dockerfile} -p 80 .") 
+            app = docker.build("werrio5/flask-helloworld", "-f ${dockerfile} .") 
         } 
     }
 
