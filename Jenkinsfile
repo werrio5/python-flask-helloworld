@@ -5,7 +5,7 @@ pipeline {
     //agent any
     agent {
         docker {
-            args '-v /var/jenkins_home/workspace/python-flask-helloworld-test/app:/app -p 80:80'
+            args '-v /var/jenkins_home/workspace/python-flask-helloworld-test/app:/app -p 8080:80'
             image 'jazzdd/alpine-flask'
         }
     }
