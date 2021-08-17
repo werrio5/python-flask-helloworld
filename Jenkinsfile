@@ -3,7 +3,6 @@
     //https://www.jenkins.io/doc/book/pipeline/syntax/
 
     node{
-        checkout scm
         def app        
         def dockerfile = 'Dockerfile.app'
 
@@ -18,14 +17,8 @@
                 }
             }
         }
-        finally{
-            stage('Cleanup') {
-                sh 'docker stop $(docker ps -a -q)'
-                sh 'docker rm $(docker ps -a -q)'
-                sh 'docker rmi $(docker images -q)'
-
-                echo 'docker data erased'
-            }                
+        finally{              
+            //
         }
     }
 
