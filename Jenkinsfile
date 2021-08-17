@@ -20,7 +20,8 @@
             always {            
                 sh 'docker stop $(docker ps -a -q)'
                 sh 'docker rm $(docker ps -a -q)'
-                sh 'docker system prune'            
+                sh 'docker images prune'      
+                echo 'docker data erased'      
             }
         }
     }
