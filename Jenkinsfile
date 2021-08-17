@@ -16,6 +16,15 @@
                     sh 'python3 -m unittest discover /app -vvv' 
                 }
             }
+
+            stage('Package') {
+                sh 'docker save --output app.tar werrio5/flask-helloworld:latest'
+                sh 'ls -sh app.tar'
+            }
+
+            stage('Deploy') {
+                //sshPublisher(publishers: [sshPublisherDesc(configName: 'test1.dev.net', sshCredentials: [encryptedPassphrase: '{AQAAABAAAAAQM8quiYo5M2F0sd/Bv40cZwBM342NWwklcWPJCt6x780=}', key: '', keyPath: '', username: 'ssh'], transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'some command idk', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/deploy', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'builtimage')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+            }
         }
         finally{              
             //
