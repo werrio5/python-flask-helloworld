@@ -29,16 +29,20 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
+                script {
+                    def app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
+                }                
             }
         }
         stage('Test') {
             steps {
-                app.inside {
-                    dir('/app') {                    
-                        sh 'python3 -m unittest discover -vvv'
-                    }   
-                }            
+                script {
+                    app.inside {
+                        dir('/app') {                    
+                            sh 'python3 -m unittest discover -vvv'
+                        }   
+                    } 
+                }                           
             }
         }
         stage('Deploy') {
