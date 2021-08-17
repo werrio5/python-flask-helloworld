@@ -26,7 +26,7 @@
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
-                            configName: 'test1.dev.net', 
+                            configName: 'test1.test.net', 
                             sshCredentials: [
                                 encryptedPassphrase: '{AQAAABAAAAAQM8quiYo5M2F0sd/Bv40cZwBM342NWwklcWPJCt6x780=}',
                                  username: 'ssh'
