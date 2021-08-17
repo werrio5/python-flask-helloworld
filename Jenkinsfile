@@ -35,7 +35,7 @@
                         sshTransfer(
                             cleanRemote: false, 
                             execCommand: 'docker load --input /tmp/app.tar ; docker run -p 80:80 werrio5/flask-helloworld', 
-                            execTimeout: 120000, 
+                            execTimeout: 30000, 
                             flatten: false, 
                             makeEmptyDirs: false, 
                             noDefaultExcludes: false, 
