@@ -13,8 +13,14 @@
 
         stage('Test') {
             app.inside {
-                sh 'ls /app'
                 sh 'python3 -m unittest discover /app -vvv' 
+            }
+        }
+        post {
+            always {            
+                sh 'docker stop $(docker ps -a -q)'
+                sh 'docker rm $(docker ps -a -q)'
+                sh 'docker rmi $(docker ps -a -q)'            
             }
         }
     }
