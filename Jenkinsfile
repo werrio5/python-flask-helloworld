@@ -31,11 +31,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                image = docker.build(
-                    "jazzdd/alpine-flask",
-                     "-v /app:/app 
-                     -p 80:80"
-                )
+                image = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
             }
         }
         stage('Test') {
