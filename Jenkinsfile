@@ -28,7 +28,7 @@
                         sshPublisherDesc(
                             configName: 'test1.test.net', 
                             sshCredentials: [
-                                encryptedPassphrase: '{AQAAABAAAAAQM8quiYo5M2F0sd/Bv40cZwBM342NWwklcWPJCt6x780=}',
+                                encryptedPassphrase: '{AQAAABAAAAAQu9AaxByS7CjzADbfx1Aw10uZtwEAQfSBx9pHk+us0M8=}',
                                  username: 'ssh'
                                  ], 
                     transfers: [
