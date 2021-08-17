@@ -1,48 +1,26 @@
 pipeline {
     //https://gist.github.com/bvis/68f3ab6946134f7379c80f1a9132057a
     //https://www.jenkins.io/doc/book/pipeline/syntax/
-    
-    environment {
-        TEST_PREFIX = "test-IMAGE"
-        TEST_IMAGE = "${env.TEST_PREFIX}:${env.BUILD_NUMBER}"
-        TEST_CONTAINER = "${env.TEST_PREFIX}-${env.BUILD_NUMBER}"
-        REGISTRY_ADDRESS = "my.registry.address.com"
 
-        SLACK_CHANNEL = "#deployment-notifications"
-        SLACK_TEAM_DOMAIN = "MY-SLACK-TEAM"
-        SLACK_TOKEN = credentials("slack_token")
-        DEPLOY_URL = "https://deployment.example.com/"
-
-        COMPOSE_FILE = "docker-compose.yml"
-        REGISTRY_AUTH = credentials("docker-registry")
-        STACK_PREFIX = "my-project-stack-name"
+    //agent any
+    agent {
+        docker {
+            args '-v /var/jenkins_home/workspace/python-flask-helloworld-test/app:/app -p 80:80'
+            image 'jazzdd/alpine-flask'
+        }
     }
 
-    agent any
-    // agent {
-    //     docker {
-    //         args '-v /app:/app -p 8080:80'
-    //         image 'jazzdd/alpine-flask'
-    //     }
-    // }
-
     stages {
-        stage('Build') {
-            steps {
-                script {
-                    def app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
-                }                
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         script {
+        //             def app = docker.build("jazzdd/alpine-flask", "-v /app:/app -p 80:80")
+        //         }                
+        //     }
+        // }
         stage('Test') {
             steps {
-                script {
-                    app.inside {
-                        dir('/app') {                    
-                            sh 'python3 -m unittest discover -vvv'
-                        }   
-                    } 
-                }                           
+                sh 'python3 -m unittest discover -vvv'                         
             }
         }
         stage('Deploy') {
