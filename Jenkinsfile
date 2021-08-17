@@ -6,9 +6,17 @@
         checkout scm
         def app        
         def dockerfile = 'Dockerfile.app'
+
         stage('Build image') {    
             app = docker.build("werrio5/flask-helloworld", "-f ${dockerfile} .") 
         } 
+
+        stage('Test') {
+            app.inside {
+                sh 'ls /app'
+                sh 'python3 -m unittest discover /app -vvv' 
+            }
+        }
     }
 
     // //agent any
